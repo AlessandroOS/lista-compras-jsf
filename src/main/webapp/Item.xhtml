@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Item</title>
+</h:head>
+<h:body>
+
+	<h:form id="frm">
+		<p:panelGrid columns="2">
+
+			<p:outputLabel value="Item" />
+			<p:inputText size="30" value="#{itemMB.item.nome}" required="true"
+				label="Item" />
+
+			<p:outputLabel value="Valor" />
+			<p:inputText size="4" value="#{itemMB.item.valor}" required="true"
+				label="Preço">
+				<f:convertNumber minFractionDigits="2" locale="pt_BR"
+					minIntegerDigits="0" />
+			</p:inputText>
+
+			<p:outputLabel value="Descrição" />
+			<p:inputText size="30" value="#{itemMB.item.descricao}"
+				required="true" label="Descrição" />
+
+			<p:outputLabel value="Categoria" />
+			<p:selectOneMenu value="#{itemMB.item.categoria}" required="true"
+				label="Categoria">
+				<f:selectItem itemLabel="Selecione uma categoria"
+					noSelectionOption="true" />
+				<f:selectItem itemLabel="Eletronicos" itemValue="ELETRONICOS" />
+				<f:selectItem itemLabel="Alimentação" itemValue="ALIMENTACAO" />
+				<f:selectItem itemLabel="Vestuario" itemValue="VESTUARIO" />
+			</p:selectOneMenu>
+
+			<p:outputLabel value="Prioridade" />
+			<p:selectOneMenu value="#{itemMB.item.prioridade}" required="true"
+				label="Categoria">
+				<f:selectItem itemLabel="Selecione uma prioridade"
+					noSelectionOption="true" />
+				<f:selectItem itemLabel="Baixa" itemValue="BAIXA" />
+				<f:selectItem itemLabel="Media" itemValue="MEDIA" />
+				<f:selectItem itemLabel="Alta" itemValue="ALTA" />
+			</p:selectOneMenu>
+
+			<p:outputLabel />
+			<p:commandButton value="Cadastrar" action="#{itemMB.add}"
+				update="frm tabela" style="margin-top: 10px" />
+
+		</p:panelGrid>
+
+		<p:dataTable value="#{itemMB.itens}" var="item" id="tabela"
+			paginator="true" rows="5">
+
+			<p:column headerText="Item">
+				<p:outputLabel value="#{item.nome}" />
+			</p:column>
+
+			<p:column headerText="Valor">
+				<p:outputLabel value="#{item.valor}">
+					<f:convertNumber type="currency" currencySymbol="R$" />
+				</p:outputLabel>
+			</p:column>
+
+			<p:column headerText="Descrição">
+				<p:outputLabel value="#{item.descricao}" />
+			</p:column>
+
+			<p:column headerText="Categoria">
+				<p:outputLabel value="#{item.categoria}" />
+			</p:column>
+
+			<p:column headerText="Prioridade">
+				<p:outputLabel value="#{item.prioridade}" />
+			</p:column>
+
+
+			<p:column headerText="">
+				<p:commandButton value="Atualizar" update="@form"
+					process="@this">
+					<f:setPropertyActionListener value="#{item}"
+						target="#{itemMB.item}" />
+				</p:commandButton>
+
+				<p:commandButton value="Deletar" action="#{itemMB.delete}"
+					update="tabela" process="@this">
+					 <f:setPropertyActionListener value="#{item}"
+						target="#{itemMB.item}" />
+				</p:commandButton>
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+
+
+</h:body>
+</html>
